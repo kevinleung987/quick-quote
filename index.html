@@ -22,12 +22,6 @@
       <nav>
         <div class="nav-wrapper grey darken-4">
           <a class="brand-logo">Quick Quote</a>
-          <ul class="right hide-on-med-and-down">
-            <!-- <li><a class="tooltipped"
-                 data-position="left"
-                 data-tooltip="To the top"
-                 onclick="window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })"><i class="mdi mdi-home"></i></a></li> -->
-          </ul>
         </div>
       </nav>
     </div>
@@ -35,30 +29,26 @@
   <main>
     <div class="container">
       <div class="row">
-        <a class="btn-floating btn-large waves-effect waves-light blue take-photo"
-           id="snap"><i class="material-icons">photo_camera</i></a>
-        <a class="btn-floating btn-large waves-effect waves-light red take-photo"
-           id="reset"><i class="material-icons">close</i></a>
+        <!-- SPACER LOL -->
       </div>
       <div class="row">
-        <div class="col s6"
-             id="video-box">
+        <div id="canvas-container">
           <video id="video"
                  width="320"
                  height="240"
                  autoplay></video>
-        </div>
-        <div class="col s6"
-             id="canvas-box">
           <canvas id="canvas"
                   width="320"
                   height="240"></canvas>
         </div>
       </div>
       <div class="row">
+        <p class="center-align"><a class="btn-floating btn-large waves-effect waves-light blue take-photo"
+             id="snap"><i class="material-icons">photo_camera</i></a></p>
       </div>
     </div>
   </main>
+  <!-- Footer -->
   <footer class="page-footer black">
     <div class="footer-copyright">
       <div class="container">Created by Kevin Leung, Gabe Gelgor, Jerry Iu, and Phoebe Choi for HackThe6ix</div>
