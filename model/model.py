@@ -35,5 +35,8 @@ train_datagen = ImageDataGenerator(              #Parameters by which we will ra
 validate_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-    
+        'data/train',  # this is the target directory
+        target_size=(150, 150),  # all images will be resized to 150x150
+        batch_size=batch_size,
+        class_mode='binary') 
 )
