@@ -19,3 +19,26 @@ footer {
 video {
   border: 2px solid red;
 }
+
+.btn-large {
+  height: 112px !important;
+  width: 112px !important;
+  margin-right: 4rem;
+}
+
+.btn-floating.btn-large i {
+  line-height: 112px !important;
+}
+
+.btn-large i {
+  font-size: 3.2rem !important;
+}
+
+#canvas-container {
+  width: 100%;
+  text-align:center;
+}
+
+canvas,video {
+  display: inline;
+}
