@@ -10,12 +10,9 @@
         href="styles.css">
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet"
-        href="//cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script>
-
-  </script>
 </head>
 
 <body>
@@ -26,21 +23,46 @@
         <div class="nav-wrapper grey darken-4">
           <a class="brand-logo">Quick Quote</a>
           <ul class="right hide-on-med-and-down">
-            <li><a class="tooltipped"
+            <!-- <li><a class="tooltipped"
                  data-position="left"
                  data-tooltip="To the top"
-                 onclick="window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })"><i class="mdi mdi-home"></i></a></li>
+                 onclick="window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })"><i class="mdi mdi-home"></i></a></li> -->
           </ul>
         </div>
       </nav>
     </div>
   </header>
-  <main></main>
+  <main>
+    <div class="container">
+      <div class="row">
+        <a class="btn-floating btn-large waves-effect waves-light blue take-photo"
+           id="snap"><i class="material-icons">photo_camera</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light red take-photo"
+           id="reset"><i class="material-icons">close</i></a>
+      </div>
+      <div class="row">
+        <div class="col s6">
+          <video id="video"
+                 width="320"
+                 height="240"
+                 autoplay></video>
+        </div>
+        <div class="col s6">
+          <canvas id="canvas"
+                  width="320"
+                  height="240"></canvas>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </main>
   <footer class="page-footer black">
     <div class="footer-copyright">
       <div class="container">Project by Kevin Leung, Gabe Gelgor, Jerry Iu, and Phoebe Choi for HackThe6ix</div>
     </div>
   </footer>
+  <script src="scripts.js"></script>
 </body>
 
 </html>
