@@ -27,33 +27,39 @@ function handleFiles(files) {
   const img = new Image;
   resizeImage(img, 320, 240);
   img.src = URL.createObjectURL(file);
-  console.log(file);
 }
-
 
 function resizeImage(image, width, height) {
-  const img = image;
-  img.onload = () => {
-    // Draw the image to canvas first, then greyscale and redraw to check
-    context.drawImage(img, 0, 0, width, height);
-    img = greyscaleImage(img);
-    context.drawImage(img, 0, 0, width, height);
+  image.onload = () => {
+    context.drawImage(image, 0, 0, width, height);
+    image.src = canvas.toDataURL();
+    const grey = greyscaleImage(image);
+    context.drawImage(grey, 0, 0, width, height);
   }
 }
 
-//WIP
 function greyscaleImage(image) {
-  const img = image;
-  for (var pixel of img.values()) {
-    var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-    pixel.setRed(avg);
-    pixel.setGreen(avg);
-    pixel.setBlue(avg);
+  greyscaleContext.drawImage(image, 0, 0);
+  const width = image.width;
+  const height = image.height;
+  const imgPixels = greyscaleContext.getImageData(0, 0, width, height);
+  for (var y = 0; y < height; y++) {
+    for (var x = 0; x < width; x++) {
+      var i = (y * 4) * width + x * 4;
+      var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+      imgPixels.data[i] = avg;
+      imgPixels.data[i + 1] = avg;
+      imgPixels.data[i + 2] = avg;
+    }
   }
-  return img;
+  greyscaleContext.putImageData(imgPixels, 0, 0);
+  const img = new Image();
+  img.id = 'greyscale';
+  img.src = greyscaleCanvas.toDataURL();
+  return img
 }
 
-// STATE MACHINE!!!!!
+// State Machine for rendering logic
 setInterval(() => {
   video.style.display = state === 'recording' ? null : 'none';
   canvas.style.display = state === 'recording' ? 'none' : null;
