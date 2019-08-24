@@ -29,10 +29,13 @@ video {
     border: 2px solid red;
 }
 
+canvas {
+  border: 1px dashed black;
+}
+
 .btn-large {
     height: 112px !important;
     width: 112px !important;
-    margin-right: 4rem;
 }
 
 .btn-floating.btn-large i {
@@ -51,4 +54,8 @@ video {
 canvas,
 video {
     display: inline;
+}
+
+input[type="file"] {
+  display: none;
 }
