@@ -1,7 +1,5 @@
 var recording = false;
 const video = document.getElementById('video');
-const videoBox = document.getElementById('video-box');
-const canvasBox = document.getElementById('canvas-box');
 
 // Elements for taking the snapshot
 const canvas = document.getElementById('canvas');
@@ -11,25 +9,25 @@ clearCanvas();
 
 function clearCanvas() {
   context.beginPath();
-  context.rect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "grey";
   context.fill();
 }
 
 setInterval(() => {
   if (recording) {
-    videoBox.style.display = null;
-    canvasBox.style.display = 'none';
+    video.style.display = null;
+    canvas.style.display = 'none';
   } else {
-    videoBox.style.display = 'none';
-    canvasBox.style.display = null;
+    video.style.display = 'none';
+    canvas.style.display = null;
   }
-}, 100);
+}, 50);
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function () {
   if (recording) {
-    context.drawImage(video, 0, 0, 320, 240);
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
     video.srcObject = null;
     video.pause();
     recording = false;
@@ -46,7 +44,7 @@ document.getElementById("snap").addEventListener("click", function () {
   }
 });
 
-document.getElementById("reset").addEventListener("click", function () {
+document.getElementById("canvas").addEventListener("click", function () {
   video.srcObject = null;
   video.pause();
   clearCanvas();

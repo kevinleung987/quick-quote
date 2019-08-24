@@ -1,13 +1,18 @@
-import os, random, math
+import os, random, math, shutil
 files = len(os.listdir("greyscale/1"))
+
 for i in range(math.floor(files*0.6)):
     foo = str(random.choice(os.listdir("greyscale/1")))
-    os.rename("grayscale/1/"+foo,"train/"+foo)
+    shutil.move("greyscale/1/"+foo,"greyscale/train/"+foo)
+
 
 for i in range(math.floor(files*0.2)):
     foo = str(random.choice(os.listdir("greyscale/1")))
-    os.rename("grayscale/1/"+foo,"CV/"+foo)
+    shutil.move("greyscale/1/"+foo,"greyscale/CV/"+foo)
+
+
 
 for i in range(math.floor(files*0.6)):
     foo = str(random.choice(os.listdir("greyscale/1")))
-    os.rename("grayscale/1/"+foo,"test/"+foo)
+    shutil.move("greyscale/1/"+foo,"greyscale/test/"+foo)
+
