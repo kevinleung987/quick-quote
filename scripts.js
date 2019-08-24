@@ -27,15 +27,28 @@ function handleFiles(files) {
     console.log(file);
 }
 
+
 function resizeImage(image, width, height) {
     const img = image;
     img.onload = () => {
+        // Draw the image to canvas first, then greyscale and redraw to check
+        context.drawImage(img, 0, 0, width, height);
         img = greyscaleImage(img);
         context.drawImage(img, 0, 0, width, height);
     }
 }
 
-
+//WIP
+function greyscaleImage(image) {
+    const img = image;
+    for (var pixel of img.values()) {
+        var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+        pixel.setRed(avg);
+        pixel.setGreen(avg);
+        pixel.setBlue(avg);
+    }
+    return img;
+}
 
 // STATE MACHINE!!!!!
 setInterval(() => {
