@@ -2,69 +2,56 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <title>Quick Quote</title>
-  <link rel="stylesheet"
-        href="styles.css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quick Quote</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 
 <body>
-  <!-- Navbar -->
-  <header>
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper grey darken-4">
-          <a class="brand-logo">Quick Quote</a>
-          <ul class="right hide-on-med-and-down">
-            <!-- <li><a class="tooltipped"
+    <!-- Navbar -->
+    <header>
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper grey darken-4">
+                    <a class="brand-logo"><img class="logo-image" src="./asset/full-logo.png" /></a>
+                    <ul class="right hide-on-med-and-down">
+                        <!-- <li><a class="tooltipped"
                  data-position="left"
                  data-tooltip="To the top"
                  onclick="window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })"><i class="mdi mdi-home"></i></a></li> -->
-          </ul>
+                    </ul>
+                </div>
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <div class="container">
-      <div class="row">
-        <a class="btn-floating btn-large waves-effect waves-light blue take-photo"
-           id="snap"><i class="material-icons">photo_camera</i></a>
-        <a class="btn-floating btn-large waves-effect waves-light red take-photo"
-           id="reset"><i class="material-icons">close</i></a>
-      </div>
-      <div class="row">
-        <div class="col s6"
-             id="video-box">
-          <video id="video"
-                 width="320"
-                 height="240"
-                 autoplay></video>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <a class="btn-floating btn-large waves-effect waves-light blue take-photo" id="snap"><i class="material-icons">photo_camera</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light red take-photo" id="reset"><i class="material-icons">close</i></a>
+            </div>
+            <div class="row">
+                <div class="col s6" id="video-box">
+                    <video id="video" width="320" height="240" autoplay></video>
+                </div>
+                <div class="col s6" id="canvas-box">
+                    <canvas id="canvas" width="320" height="240"></canvas>
+                </div>
+            </div>
+            <div class="row">
+            </div>
         </div>
-        <div class="col s6"
-             id="canvas-box">
-          <canvas id="canvas"
-                  width="320"
-                  height="240"></canvas>
+    </main>
+    <footer class="page-footer black">
+        <div class="footer-copyright">
+            <div class="container">Created by Kevin Leung, Gabe Gelgor, Jerry Iu, and Phoebe Choi for HackThe6ix</div>
         </div>
-      </div>
-      <div class="row">
-      </div>
-    </div>
-  </main>
-  <footer class="page-footer black">
-    <div class="footer-copyright">
-      <div class="container">Created by Kevin Leung, Gabe Gelgor, Jerry Iu, and Phoebe Choi for HackThe6ix</div>
-    </div>
-  </footer>
-  <script src="scripts.js"></script>
+    </footer>
+    <script src="scripts.js"></script>
 </body>
 
 </html>
