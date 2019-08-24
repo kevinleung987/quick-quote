@@ -5,7 +5,7 @@ lowDamageRoute = '/dataset/1/'
 medDamageRoute = '/dataset/2/'
 highDamageRoute = '/dataset/3/'
 
-os.chdir("dataset\\3\\")
+os.chdir("dataset\\original\\3\\")
 for file in glob.glob("*.jpg"):
     img = Image.open(file).convert('LA')
-    img.save('grey-'+file[:-4]+'.png')
+    img.save('high-grey-'+file[:-4]+'.png')
