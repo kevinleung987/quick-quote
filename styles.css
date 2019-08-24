@@ -11,3 +11,11 @@ main {
 footer {
   padding-top: 0px !important;
 }
+
+.take-photo {
+  size: 480px !important;
+}
+
+video {
+  border: 2px solid red;
+}
