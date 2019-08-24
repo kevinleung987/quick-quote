@@ -10,7 +10,7 @@ datagen = ImageDataGenerator(              #Parameters by which we will randomly
     horizontal_flip=True,                  #random horizontal flip half the images
     fill_mode='nearest')                   #Fill in newly created pixels from rotation
 
-img = load_img(str(random.choice(os.listdir("dataset/greyscale/1"))))
+img = load_img("dataset/greyscale/1/"+str(random.choice(os.listdir("dataset/greyscale/1"))))
 img_array = img_to_array(img)                                           #Numpy array with shape of 3, 150, 150
 img_array = img_array.reshape((1,) + img_array.shape)                   #Numpy array with shape 1, 3, 150, 150
 
