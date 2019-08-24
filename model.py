@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
-from keras.laters import Activation, Dropout, Flatten, Dense
+from keras.layers import Activation, Dropout, Flatten, Dense
 
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=(3, 150, 150)))
@@ -35,8 +35,22 @@ train_datagen = ImageDataGenerator(              #Parameters by which we will ra
 validate_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-        'data/train',  # this is the target directory
+        'dataset/greyscale/train',  # this is the target directory
         target_size=(150, 150),  # all images will be resized to 150x150
+        batch_size=BATCH_SIZE,
+        class_mode='categorical') 
+
+
+validation_generator = test_datagen.flow_from_directory(
+        'dataset/greyscale/CV',
+        target_size=(150, 150),
         batch_size=batch_size,
-        class_mode='binary') 
-)
+        class_mode='categorical')
+
+model.fit_generator(
+        train_generator,
+        steps_per_epoch=1780 // BATCH_SIZE,
+        epochs=50,
+        validation_data=validation_generator,
+        validation_steps=590 // BATCH_SIZE)
+model.save_weights('weights.h5')
