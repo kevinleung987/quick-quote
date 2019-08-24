@@ -5,8 +5,8 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 // Greyscale/Neural Network Canvas
-const greyscaleCanvas = document.getElementById('greyscale');
-const greyscaleContext = greyscaleCanvas.getContext('2d');
+const prepCanvas = document.getElementById('greyscale');
+const prepContext = prepCanvas.getContext('2d');
 // Buttons
 const takePhotoButton = document.getElementById('snap');
 const confirmButton = document.getElementById('confirm');
@@ -24,25 +24,22 @@ function clearCanvas() {
 
 function handleFiles(files) {
   const file = files[0];
-  const img = new Image;
-  resizeImage(img, 320, 240);
+  const img = new Image();
+  resizeImage(img, canvas.width, canvas.height);
   img.src = URL.createObjectURL(file);
+  state = 'confirm';
 }
 
 function resizeImage(image, width, height) {
   image.onload = () => {
     context.drawImage(image, 0, 0, width, height);
-    image.src = canvas.toDataURL();
-    const grey = greyscaleImage(image);
-    context.drawImage(grey, 0, 0, width, height);
+    prepareImage(image, 28, 28);
   }
 }
 
-function greyscaleImage(image) {
-  greyscaleContext.drawImage(image, 0, 0);
-  const width = image.width;
-  const height = image.height;
-  const imgPixels = greyscaleContext.getImageData(0, 0, width, height);
+function prepareImage(image, width, height) {
+  prepContext.drawImage(image, 0, 0, width, height);
+  const imgPixels = prepContext.getImageData(0, 0, width, height);
   for (var y = 0; y < height; y++) {
     for (var x = 0; x < width; x++) {
       var i = (y * 4) * width + x * 4;
@@ -52,11 +49,9 @@ function greyscaleImage(image) {
       imgPixels.data[i + 2] = avg;
     }
   }
-  greyscaleContext.putImageData(imgPixels, 0, 0);
-  const img = new Image();
-  img.id = 'greyscale';
-  img.src = greyscaleCanvas.toDataURL();
-  return img
+  prepContext.putImageData(imgPixels, 0, 0);
+  console.log(imgPixels);
+  return imgPixels
 }
 
 // State Machine for rendering logic
@@ -75,6 +70,7 @@ setInterval(() => {
 takePhotoButton.addEventListener("click", function () {
   if (state === 'recording') {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    prepareImage(video, 28, 28);
     video.srcObject = null;
     video.pause();
     state = 'confirm';
