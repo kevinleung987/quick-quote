@@ -4,7 +4,7 @@ import pandas as pd
 from keras.utils.np_utils import to_categorical
 from sklearn.model_selection import train_test_split
 from keras import Sequential
-from keras import Dense, MaxPooling2D, Dropout, Flatten, Conv2D
+from keras.layers import Dense, MaxPooling2D, Dropout, Flatten, Conv2D
 
 training_data = pd.read_csv('dataset/train.csv')
 testing_data = pd.read_csv('dataset/test.csv')
@@ -13,8 +13,8 @@ labelTrain = training_data['label']
 dataTrain = training_data.drop(labels=['label'], axis=1)
 dataTest = testing_data.values
 
-dataTrain /= 255                                            #normalization, makes data easier to work with visually.
-dataTest /= 255                           
+dataTrain = dataTrain/255                                            #normalization, makes data easier to work with visually.
+dataTest = dataTrain/255                           
 
 dataTrain = dataTrain.values.reshape(-1,28,28,1)            #unroll vector back into image matrix. 28*28px (h,w) with a channel of 1.
 dataTest = dataTest.reshape([-1,28,28,1])
@@ -25,24 +25,24 @@ dataTrain, dataVal, labelTrain, labelVal = train_test_split(dataTrain, dataVal, 
 
 model = Sequential()
 
-model.add(Conv2D(filters=32, kernel_size(5,5), activation='relu', padding='same', input_shape=(28, 28, 1)))
-model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu', padding='same', input_shape=(28, 28, 1)))
+model.add(MaxPooling2D(padding='same', pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(filters=32, kernel_size(5,5), activation='relu', padding='same'))
-model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Conv2D(filters=32, kernel_size=(5,5), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(filters=64, kernel_size(3,3), activation='relu', padding='same'))
-model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(filters=64, kernel_size(3,3), activation='relu', padding='same'))
-model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Conv2D(filters=64, kernel_size=(3,3), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(256), activation('relu'))
+model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.25))
 model.add(Dense(3, activation='softmax'))
 
