@@ -65,10 +65,11 @@ function prepareImage(image, width, height) {
     return pixels;
 }
 
-function getEstimate(data) {
+function getEstimate() {
     // TODO: Dynamically generate using ML
     const rand = priceRange[Math.floor(Math.random() * priceRange.length)];
-    estimate.innerText = `Your estimated value is ${rand} CAD`;
+    console.log(rand);
+    estimate.innerText = `Your estimated repair cost is ${rand} CAD`;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -125,5 +126,6 @@ confirmButton.addEventListener("click", function() {
     console.log(currPixels);
     clearCanvas();
     state = 'idle';
+    getEstimate();
     M.Modal.getInstance(document.querySelector('.modal')).open();
 });
