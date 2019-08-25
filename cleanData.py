@@ -4,11 +4,11 @@ import glob, os
 f= open("dataset\\train.csv","a+")
 f.write("label,")
 
-for i in range(783):
-    f.write("Pixel "+str(i)+",")
-f.write("Pixel 783\n")
+# for i in range(784):
+#     f.write(str(i)+",")
+# f.write("\n")
 
-os.chdir("dataset\\greyscale\\train\\")
+os.chdir("dataset\\greyscale\\CV\\")
 for file in glob.glob("low*.png"):
     img = Image.open(file,'r')
     pix_val = list(img.getdata())
