@@ -2,10 +2,10 @@ from PIL import Image
 import glob, os
 
 f= open("dataset\\train.csv","a+")
-f.write("label,")
 
+# f.write("label,")
 # for i in range(784):
-#     f.write(str(i)+",")
+#     f.write("Pixel "+str(i)+",")
 # f.write("\n")
 
 os.chdir("dataset\\greyscale\\CV\\")
