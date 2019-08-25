@@ -2,12 +2,14 @@ var state = 'idle';
 var currPixels;
 // Title Text
 const title = document.getElementById('title-text');
+// Estimate Modal Text
+const estimate = document.getElementById('estimate');
 // Video Display
 const video = document.getElementById('video');
 // Elements for taking the snapshot
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
-// Greyscale/Neural Network Canvas
+// Preparation Canvas
 const prepCanvas = document.getElementById('greyscale');
 const prepContext = prepCanvas.getContext('2d');
 // Buttons
@@ -58,7 +60,13 @@ function prepareImage(image, width, height) {
     pixels.push(imgPixels.data[x]);
   }
   currPixels = pixels;
-  return pixels
+  return pixels;
+}
+
+function getEstimate(data) {
+  // TODO: Dynamically generate using ML
+  const value = 3000;
+  estimate.innerText = `Your estimated value is $${value} CAD`;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
