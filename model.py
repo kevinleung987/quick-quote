@@ -1,56 +1,57 @@
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Activation, Dropout, Flatten, Dense
+import numpy as np
+import pandas as pd
+#from subprocess import check_output
+from keras.utils.np_utils import to_categorical
+from sklearn.model_selection import train_test_split
+from keras import Sequential
+from keras import Dense, MaxPooling2D, Dropout, Flatten, Conv2D
+
+training_data = pd.read_csv('dataset/train.csv')
+testing_data = pd.read_csv('dataset/test.csv')
+
+labelTrain = training_data['label']
+dataTrain = training_data.drop(labels=['label'], axis=1)
+dataTest = testing_data.values
+
+dataTrain /= 255                                            #normalization, makes data easier to work with visually.
+dataTest /= 255                           
+
+dataTrain = dataTrain.values.reshape(-1,28,28,1)            #unroll vector back into image matrix. 28*28px (h,w) with a channel of 1.
+dataTest = dataTest.reshape([-1,28,28,1])
+
+labelTrain = to_categorical(labelTrain, num_classes=3)
+
+dataTrain, dataVal, labelTrain, labelVal = train_test_split(dataTrain, dataVal, random_state=2, test_size=0.25)
 
 model = Sequential()
-model.add(Conv2D(32, (3, 3), input_shape=(3, 150, 150)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
 
-model.add(Conv2D(32, (3, 3), input_shape=(3, 150, 150)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(filters=32, kernel_size(5,5), activation='relu', padding='same', input_shape=(28, 28, 1)))
+model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Dropout(0.25))
 
-model.add(Conv2D(64, (3, 3), input_shape=(3, 150, 150)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(filters=32, kernel_size(5,5), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Conv2D(filters=64, kernel_size(3,3), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Conv2D(filters=64, kernel_size(3,3), activation='relu', padding='same'))
+model.add(MaxPooling2D(padding='same', pool_size(2, 2)))
+model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(64))
-model.add(Activation('relu'))
-model.add(Dropout(0.5))
-model.add(Dense(3))
-model.add(Activation('sigmoid'))
+model.add(Dense(256), activation('relu'))
+model.add(Dropout(0.25))
+model.add(Dense(3, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='rmsprop',metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='Adam', metrics=['accuracy'] )
+model.fit(batch_size=200, epochs=12, x=dataTrain, y=labelTrain, validation_data=[dataVal, labelVal])
 
-BATCH_SIZE = 16
+predict = model.predict(dataTest)
+label = np.argmax(predict, axis=1)
+test_id = np.reshape(range(1, len(predict) + 1), label.shape)
 
-train_datagen = ImageDataGenerator(              #Parameters by which we will randomly transform images, thereby increasing data set size
-    rescale = 1./255,
-    shear_range=0.2,                       #radomly apply shearing transformations
-    zoom_range=0.2,                        #Randomly zooming inside pictures
-    horizontal_flip=True)                  #random horizontal flip half the images
-
-validate_datagen = ImageDataGenerator(rescale=1./255)
-
-train_generator = train_datagen.flow_from_directory(
-        'dataset/greyscale/train',  # this is the target directory
-        target_size=(150, 150),  # all images will be resized to 150x150
-        batch_size=BATCH_SIZE,
-        class_mode='categorical') 
-
-
-validation_generator = test_datagen.flow_from_directory(
-        'dataset/greyscale/CV',
-        target_size=(150, 150),
-        batch_size=batch_size,
-        class_mode='categorical')
-
-model.fit_generator(
-        train_generator,
-        steps_per_epoch=1780 // BATCH_SIZE,
-        epochs=50,
-        validation_data=validation_generator,
-        validation_steps=590 // BATCH_SIZE)
-model.save_weights('weights.h5')
+output = pd.DataFrame({'ImageId': test_id, 'Label': label})
+output.to_csv('output.csv', index=False)
