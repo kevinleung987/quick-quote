@@ -1,4 +1,7 @@
 var state = 'idle';
+var currPixels;
+// Title Text
+const title = document.getElementById('title-text');
 // Video Display
 const video = document.getElementById('video');
 // Elements for taking the snapshot
@@ -50,9 +53,18 @@ function prepareImage(image, width, height) {
     }
   }
   prepContext.putImageData(imgPixels, 0, 0);
-  console.log(imgPixels);
-  return imgPixels
+  const pixels = []
+  for (var x = 0; x < imgPixels.data.length; x = x + 4) {
+    pixels.push(imgPixels.data[x]);
+  }
+  currPixels = pixels;
+  return pixels
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.modal');
+  M.Modal.init(elems, {});
+});
 
 // State Machine for rendering logic
 setInterval(() => {
@@ -64,6 +76,13 @@ setInterval(() => {
   resetButton.style.display = state === 'idle' ? 'none' : null;
   resetButton.children[0].textContent = state === 'recording' ? 'clear' : 'undo';
   uploadButton.style.display = state === 'idle' ? null : 'none';
+  if (state === 'recording') {
+    title.innerText = 'Please take a picture!';
+  } else if (state === 'confirm') {
+    title.innerText = 'Confirm your photo!';
+  } else if (state === 'idle') {
+    title.innerText = 'Take or add a photo!';
+  }
 }, 50);
 
 // Trigger photo take
@@ -90,4 +109,11 @@ resetButton.addEventListener("click", function () {
   video.pause();
   clearCanvas();
   state = 'idle';
+});
+
+confirmButton.addEventListener("click", function () {
+  console.log(currPixels);
+  clearCanvas();
+  state = 'idle';
+  M.Modal.getInstance(document.querySelector('.modal')).open();
 });
